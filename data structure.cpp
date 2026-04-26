@@ -1,212 +1,96 @@
+namespace min_heap {
+// template<typename U>
+// using min_heap = priority_queue<U, vector<U>, greater<U>>;
+}
 namespace SegTree {
-//     struct segTree {
-//      #define L(x) (2 * x + 1)
-//      #define R(x) (2 * x + 2)
-//         int size;
-//         const int init = 0ll;
-//         vector<int> tree;
-//         segTree(int n) {
-//             size = 1;
-//             while (size < n) size *= 2;
-//             tree.assign(2 * size + 100, init);
-//         }
-//         int merge (int __left, int __right) {
-//             return __left + __right;
-//         }
-//
-//         void update (int i, int v, int x, int lx, int rx) {
-//             if (rx - lx == 1) {
-//                 tree[x] += v;
-//                 return;
-//             }
-//             int mid = (lx + rx) / 2;
-//             if (i < mid) {
-//                 update (i, v, L(x), lx, mid);
-//             } else {
-//                 update (i, v, R(x), mid, rx);
-//             }
-//             tree[x] = merge (tree[L(x)], tree[R(x)]);
-//         }
-//
-//         void update (int i, int v) {
-//             if (i < 0 || i >= size) return;
-//             update (i, v, 0, 0, size);
-//         }
-//
-//         int query (int l, int r, int x, int lx, int rx) {
-//             if (l >= rx or r <= lx) return init;
-//             if (lx >= l && rx <= r) return tree[x];
-//
-//             int mid = (lx + rx) / 2;
-//             return merge (query (l, r, L(x), lx, mid),query (l, r, R(x), mid, rx));
-//
-//         }
-//
-//         int query (int l, int r) {
-//             return query(l, r, 0, 0, size);
-//         }
-//
-//      #undef L
-//      #undef R
-//     };
+    /*
+struct segTree {
+#define L(x) (2 * x + 1)
+#define R(x) (2 * x + 2)
+int size;
+const int init = 1e18;
+vector<int> tree;
+segTree(int n) {
+size = 1uLL << (64 - __builtin_clzll(n - 1));
+tree.assign(2 * size, init);
+}
+int merge (int __left, int __right) {
+return min(__left, __right);
+}
+void update (int i, int v, int x, int lx, int rx) {
+if (rx - lx == 1) {
+    tree[x] = v;
+    return;
+}
+int mid = (lx + rx) / 2;
+if (i < mid) {
+    update (i, v, L(x), lx, mid);
+} else {
+    update (i, v, R(x), mid, rx);
+}
+tree[x] = merge (tree[L(x)], tree[R(x)]);
 }
 
-namespace LazySegTree {
-// struct segTree {
-// #define L(x) (2 * x + 1)
-// #define R(x) (2 * x + 2)
-//
-//     int size = 1;
-//     vector<ll> tree, lazy;
-//     explicit segTree(int n) {
-//         while (size < n) size <<= 1;
-//         tree.assign(2 * size, 0);
-//         lazy.assign(2 * size, -1);
-//     }
-//
-//     void relax (int x, int lx, int rx) {
-//         if (lazy[x] == -1) return;
-//         tree[x] = (lazy[x] * (rx -lx));
-//         if (rx - lx > 1) {
-//             lazy[L(x)] = lazy[x];
-//             lazy[R(x)] = lazy[x];
-//         }
-//         lazy[x] = -1;
-//     }
-//
-//     void update(int l, int r, ll v, int x, int lx, int rx) {
-//         relax(x, lx, rx);
-//         if (l >= rx || r <= lx) return;
-//         if (l <= lx && rx <= r) {
-//             lazy[x] = v;
-//             relax(x, lx, rx);
-//             return;
-//         }
-//         update(l, r, v, L(x), lx, (lx + rx) / 2);
-//         update(l, r, v, R(x), (lx + rx) / 2, rx);
-//         tree[x] = tree[L(x)] + tree[R(x)];
-//     }
-//
-//     void mult(int l, int r, ll v) {
-//         update(l, r, v, 0, 0, size);
-//     }
-//
-//     ll sum(int l, int r, int x, int lx, int rx) {
-//         relax(x, lx, rx);
-//         if (l >= rx || r <= lx)
-//             return 0;
-//         if (l <= lx && rx <= r) return tree[x];
-//         return sum(l, r, L(x), lx, (lx + rx) / 2) + sum(l, r, R(x), (lx + rx)/2, rx);
-//     }
-//     ll sum(int l, int r) {
-//         return sum(l, r, 0, 0, size);
-//     }
-// #undef L
-// #undef R
-// };
+void update (int i, int v) {
+update (i, v, 0, 0, size);
 }
 
-namespace  Lazy_segTree_hashing {
-//
-// const int N = 1e5 + 5, bs1 = 17, mod = 1e9 + 7;
-//
-// int mul(int x, int y) {
-//     x = ((x % mod) + mod) % mod,
-//     y = ((y % mod) + mod) % mod;
-//     return (x * y * 1LL) % mod;
-// }
-// int add(int x, int y) {
-//     x = ((x % mod) + mod) % mod,
-//     y = ((y % mod) + mod) % mod;
-//     return (x + y) % mod;
-// }
-//
-// int pw[N];
-// vector<int> sumP(N, 0);
-//
-// void com_sumP () {
-//     sumP[0] = 0;
-//     pw[0] = 1;
-//     for (int i = 1; i < N; ++i) {
-//         pw[i] = mul(pw[i - 1], bs1);
-//         sumP[i] = add(sumP[i - 1] , pw[i - 1]);
-//     }
-// }
-//
-// struct LazySegTreeHashing {
-// #define L(x) (2 * x + 1)
-// #define R(x) (2 * x + 2)
-// #define ll long long
-//
-//     int size = 1;
-//     struct node {
-//         int hash_value, sz;
-//     };
-//     vector<node> tree; vector<int> lazy;
-//     LazySegTreeHashing(int n) {
-//         while (size < n) size <<= 1;
-//         tree.assign(4 * size, {0, 0});
-//         lazy.assign(4 * size, -1);
-//
-//         int leaf_start = size - 1;
-//         for (int i = leaf_start; i <= 2 * size - 2; ++i) {
-//             int idx = i - leaf_start;
-//             tree[i].sz = (idx < n) ? 1 : 0;
-//         }
-//         for (int i = leaf_start - 1; i >= 0; --i) {
-//             tree[i].sz = tree[L(i)].sz + tree[R(i)].sz;
-//         }
-//     }
-//
-//     void relax (int x, int lx, int rx) {
-//         if (lazy[x] == -1) return;
-//         tree[x].hash_value = mul(lazy[x] , (sumP[tree[x].sz]));
-//         if (rx - lx > 1) {
-//             lazy[L(x)] = lazy[x];
-//             lazy[R(x)] = lazy[x];
-//         }
-//         lazy[x] = -1;
-//     }
-//     int operation(int x) {
-//         return add(tree[L(x)].hash_value, mul(tree[R(x)].hash_value , pw[tree[L(x)].sz]));
-//     }
-//     void update(int l, int r, ll v, int x, int lx, int rx) {
-//         relax(x, lx, rx);
-//         if (l >= rx || r <= lx) return;
-//         if (l <= lx && rx <= r) {
-//             lazy[x] = v;
-//             relax(x, lx, rx);
-//             return;
-//         }
-//         update(l, r, v, L(x), lx, (lx + rx) / 2);
-//         update(l, r, v, R(x), (lx + rx) / 2, rx);
-//         tree[x].hash_value = operation(x);
-//         tree[x].sz = tree[L(x)].sz + tree[R(x)].sz;
-//     }
-//
-//     void query1(int l, int r, ll v) {
-//         update(l, r, v, 0, 0, size);
-//     }
-//
-//     ll get_hash(int l, int r, int x, int lx, int rx) {
-//         relax(x, lx, rx);
-//         if (l >= rx || r <= lx) return 0;
-//         if (l <= lx && rx <= r) return tree[x].hash_value;
-//         int mid = (lx + rx) / 2;
-//         int leftHash = get_hash(l, r, L(x), lx, mid);
-//         int rightHash = get_hash(l, r, R(x), mid, rx);
-//         int left_len = max(0ll, min(mid, r) - max(l, lx));
-//         return add((int)leftHash, mul((int)rightHash, pw[left_len]));
-//     }
-//     bool query2(int l, int r, int per) {
-//         return get_hash(l, r - per, 0, 0, size) == get_hash(l + per, r, 0, 0, size);
-//     }
-// #undef L
-// #undef R
-// };
+int query (int l, int r, int x, int lx, int rx) {
+if (l >= rx or r <= lx) return init;
+if (lx >= l && rx <= r) return tree[x];
 
+int mid = (lx + rx) / 2;
+return merge (query (l, r, L(x), lx, mid),query (l, r, R(x), mid, rx));
 }
 
+int query (int l, int r) {
+return query(l, r, 0, 0, size);
+}
+
+#undef L
+#undef R
+};
+struct Max2SegTree {
+struct Node { long long mx, smax; };
+int n;
+vector<Node> st;
+Max2SegTree() = default;
+Max2SegTree(const vector<long long>& a){
+n=(int)a.size();
+st.assign(4*n, {LLONG_MIN, LLONG_MIN});
+build(1,0,n-1,a);
+}
+Node merge(const Node& A,const Node& B){
+Node R;
+if(A.mx>=B.mx){ R.mx=A.mx; R.smax=max(A.smax, B.mx); }
+else { R.mx=B.mx; R.smax=max(B.smax, A.mx); }
+return R;
+}
+void build(int p,int l,int r,const vector<long long>& a){
+if(l==r){ st[p]={a[l], LLONG_MIN}; return; }
+int m=(l+r)/2;
+build(p<<1,l,m,a);
+build(p<<1|1,m+1,r,a);
+st[p]=merge(st[p<<1],st[p<<1|1]);
+}
+Node query(int ql,int qr){ return query(1,0,n-1,ql,qr); }
+Node query(int p,int l,int r,int ql,int qr){
+if(ql>r||qr<l) return {LLONG_MIN, LLONG_MIN};
+if(ql<=l&&r<=qr) return st[p];
+int m=(l+r)/2;
+return merge(query(p<<1,l,m,ql,qr), query(p<<1|1,m+1,r,ql,qr));
+}
+void point_update(int idx,long long v){ point_update(1,0,n-1,idx,v); }
+void point_update(int p,int l,int r,int idx,long long v){
+if(l==r){ st[p]={v,LLONG_MIN}; return; }
+int m=(l+r)/2;
+if(idx<=m) point_update(p<<1,l,m,idx,v); else point_update(p<<1|1,m+1,r,idx,v);
+st[p]=merge(st[p<<1],st[p<<1|1]);
+}
+};
+
+*/
+}
 namespace MergeSortTree {
 // 0-index and Not Include R
 /*
@@ -265,7 +149,6 @@ namespace MergeSortTree {
     };
 */
 }
-
 namespace SparseTable {
     // struct Sparse {
     //     int n, k;
@@ -301,7 +184,25 @@ namespace SparseTable {
     //     }
     // };
 }
-
+namespace successorPath {
+    // vector<vector<int>> up(n + 1, vector<int>(20));
+    // for (int i = 1; i <= n; i++) {
+    //     up[i][0] = par[i];
+    // }
+    // for (int j = 1; j < 20; j++) {
+    //     for (int i = 1; i <= n; i++) {
+    //         up[i][j] = up[ up[i][j - 1] ][j - 1];
+    //     }
+    // }
+    // auto getRoot = [&](int v) {
+    //     for (int j = 19; j >= 0; j--) {
+    //         if (up[v][j] != v) {
+    //             v = up[v][j];
+    //         }
+    //     }
+    //     return v;
+    // };
+}
 namespace Fenwick {
 /*
 struct Fenwick { // 1-index
@@ -325,7 +226,6 @@ struct Fenwick { // 1-index
 };
 */
 }
-
 namespace DSU {
     /*
 struct DSU {
@@ -357,10 +257,8 @@ struct DSU {
 };
 */
 }
-
 namespace MonoStack {
-/*
-    struct monoStack {
+/*    struct monoStack {
         vector<ll> nxt;
         stack<ll> st;
         explicit monoStack(const vector<ll>& a) {
@@ -376,9 +274,9 @@ namespace MonoStack {
             return nxt[i];
         }
     };
+
 */
 }
-
 namespace SqrtD {
 /*
     struct sqrtDecomposition {
@@ -416,7 +314,6 @@ namespace SqrtD {
     };
     */
 }
-
 namespace Mo {
 /*
     int SQ = 175;
@@ -461,132 +358,6 @@ namespace Mo {
     };
 */
 }
-
-namespace LCA {
-    /*
-    struct LCA {
-        int n, LOG;
-        vector<int> dep;
-        vector<vector<int>> up;
-
-        LCA(vector<vector<int>> &adj) {
-            n = adj.size() - 1;
-            LOG = __lg(n) + 1;
-
-            up.assign(n + 1, vector<int>(LOG));
-            dep.assign(n + 1, 0);
-
-            function<void(int,int)> dfs = [&](int v, int p) {
-                up[v][0] = p;
-                for (int j = 1; j < LOG; j++)
-                    up[v][j] = up[ up[v][j-1] ][j-1];
-
-                for (int u : adj[v]) {
-                    if (u == p) continue;
-                    dep[u] = dep[v] + 1;
-                    dfs(u, v);
-                }
-            };
-            dfs(1, 1);
-        }
-
-        int find_anc(int a, int k) {
-            if (k > dep[a]) return -1;
-            for (int j = 0; j < LOG; j++)
-                if (k & (1 << j))
-                    a = up[a][j];
-            return a;
-        }
-
-        int lca(int a, int b) {
-            if (dep[a] < dep[b]) swap(a, b);
-            a = find_anc(a, dep[a] - dep[b]);
-            if (a == b) return a;
-
-            for (int j = LOG - 1; j >= 0; j--) {
-                if (up[a][j] != up[b][j]) {
-                    a = up[a][j];
-                    b = up[b][j];
-                }
-            }
-            return up[a][0];
-        }
-        int dist(int a, int b) {
-            return dep[a] + dep[b] - 2 * dep[lca(a, b)];
-        }
-        int common_path(int f1, int f2, int des) {
-            return ((dist(f1, des) + dist(f2, des) - dist(f1, f2)) >> 1) + 1;
-        }
-    }; */
-}
-
-namespace hashing {
-/* double string hashing
-    const int N = 2e5 + 5, bs1 = 31, bs2 = 37, mod = 1e9 + 7;
-    int pw1[N], pw2[N], inv1[N], inv2[N];
-
-    int mul(int x, int y) {
-        x = ((x % mod) + mod) % mod,
-        y = ((y % mod) + mod) % mod;
-        return (x * y * 1LL) % mod;
-    }
-    int add(int x, int y) {
-        x = ((x % mod) + mod) % mod,
-        y = ((y % mod) + mod) % mod;
-        return (x + y) % mod;
-    }
-    int binpow(int a, int e, int mod = 1e9 + 7) {
-        if (!e) return 1;
-        a %= mod;
-        int res = 1;
-        while (e) {
-            if (e & 1) res = res * a % mod;
-            a = a * a % mod;
-            e >>= 1;
-        } return res;
-    }
-
-    void pre() {
-        pw1[0] = 1, pw2[0] = inv1[0] = inv2[0] = 1;
-        int invP1 = binpow(bs1, mod - 2);
-        int invP2 = binpow(bs2, mod - 2);
-        for (int i = 1; i < N; ++i) {
-            pw1[i] = mul(pw1[i - 1], bs1);
-            pw2[i] = mul(pw2[i - 1], bs2);
-            inv1[i] = mul(inv1[i - 1], invP1);
-            inv2[i] = mul(inv2[i - 1], invP2);
-        }
-    }
-
-
-    struct Hash {
-        vector<pair<int, int>> prefix_hash;
-        Hash(const string &s) { if (!preCalc) {
-            pre(); preCalc = true;
-        }
-            prefix_hash = vector<pair<int, int>>(s.size(), {0, 0});
-            for (int i = 0; i < s.size(); i++) {
-                prefix_hash[i].first = mul((s[i] - 'a' + 1), pw1[i]);
-                prefix_hash[i].second = mul((s[i] - 'a' + 1), pw2[i]);
-                if (i) prefix_hash[i] = {
-                    add(prefix_hash[i].first, prefix_hash[i - 1].first),
-                    add(prefix_hash[i].second, prefix_hash[i - 1].second),
-                };
-            }
-        }
-        pair<int, int> get_hash() {
-            return prefix_hash.back();
-        }
-        pair<int, int> get_range_hash(int l, int r) {
-            return {
-                mul(add(prefix_hash[r].first, - (l ? prefix_hash[l - 1].first: 0)), inv1[l]),
-                mul(add(prefix_hash[r].second, - (l ? prefix_hash[l - 1].second: 0)), inv2[l])
-            };
-        }
-    };
-*/
-}
-
 namespace OrderedSet {
     // #include <ext/pb_ds/assoc_container.hpp>
     // #include <ext/pb_ds/tree_policy.hpp>
@@ -596,162 +367,6 @@ namespace OrderedSet {
     //     typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
 }
-
-namespace Trie {
-    /*struct TrieNode {
-        TrieNode* child[26]; // لو حروف a-z
-        int cnt; // عدد الكلمات اللي تمر من هنا
-        int end_cnt; // عدد الكلمات اللي تنتهي هنا
-        TrieNode() {
-            cnt = 0;
-            end_cnt = 0;
-            for(int i = 0; i < 26; i++) child[i] = nullptr;
-        }
-    };
-
-    struct Trie {
-        TrieNode* root;
-        Trie() { root = new TrieNode(); }
-
-        // Insert word into trie
-        void insert(const string &s) {
-            TrieNode* cur = root;
-            for(char c : s) {
-                int idx = c - 'a';
-                if(!cur->child[idx]) cur->child[idx] = new TrieNode();
-                cur = cur->child[idx];
-                cur->cnt++;
-            }
-            cur->end_cnt++;
-        }
-
-        // Search if word exists
-        bool search(const string &s) {
-            TrieNode* cur = root;
-            for(char c : s) {
-                int idx = c - 'a';
-                if(!cur->child[idx]) return false;
-                cur = cur->child[idx];
-            }
-            return cur->end_cnt > 0;
-        }
-
-        // Erase a word (decrease counts)
-        bool erase(const string &s) {
-            if(!search(s)) return false; // word not present
-            TrieNode* cur = root;
-            for(char c : s) {
-                int idx = c - 'a';
-                TrieNode* nxt = cur->child[idx];
-                nxt->cnt--;
-                // Optional: delete node if cnt==0 to save memory
-                if(nxt->cnt == 0) {
-                    cur->child[idx] = nullptr;
-                    delete nxt;
-                    return true;
-                }
-                cur = nxt;
-            }
-            cur->end_cnt--;
-            return true;
-        }
-    };
-
-}
-
-namespace BinaryTrie {
-    // struct BinaryTrie {
-    //     struct Node {
-    //         Node* ch[2];
-    //         int freq[2];
-    //         Node() {
-    //             ch[0] = ch[1] = NULL;
-    //             freq[0] = freq[1] = 0;
-    //         }
-    //     };
-    //     BinaryTrie() {
-    //         insert(0);
-    //     }
-    //     Node *root = new Node();
-    //     void insert(int n) {
-    //         Node* cur = root;
-    //         for (int i = 29; i >= 0; i--) {
-    //             int idx = (n >> i) & 1;
-    //             if (cur->ch[idx] == 0)
-    //                 cur->ch[idx] = new Node();
-    //             cur->freq[idx]++;
-    //             cur = cur->ch[idx];
-    //         }
-    //     }
-    //     void del(int n, int i, Node* cur) {
-    //         if (i == -1) return;
-    //         bool idx = (n >> i) & 1;
-    //         del(n, i - 1, cur->ch[idx]);
-    //         cur->freq[idx]--;
-    //         if (cur->freq[idx] == 0) {
-    //             delete cur->ch[idx];
-    //             cur->ch[idx] = 0;
-    //         }
-    //     }
-    //     int query(int n) {
-    //
-    //     }
-    // };
-}
-
-namespace dsuOnTree {
-    /*
-    const int N = 200005;
-    vector<int> adj[N];
-    int C[N], ans[N], freq[N];
-    vector<pair<int,int>> queries[N];
-    int sz[N], Big[N];
-
-    void pre_sz(int v, int p) {
-        sz[v] = 1, Big[v] = -1;
-        for (int u : adj[v]) {
-            if (u == p) continue;
-            pre_sz(u, v);
-            sz[v] += sz[u];
-            if (Big[v] == -1 || sz[u] > sz[Big[v]]) Big[v] = u;
-        }
-    }
-
-
-    void add_subtree(int v, int p, int d) {
-        freq[C[v]] += d;
-        for (int u : adj[v]) {
-            if (u == p) continue;
-            add_subtree(u, v, d);
-        }
-    }
-
-    void dfs(int v, int p, bool keep) {
-
-        for (int u : adj[v]) {
-            if (u == p || u == Big[v]) continue;
-            dfs(u, v, false);
-        }
-
-        if (Big[v] != -1) dfs(Big[v], v, true);
-
-        freq[C[v]]++;
-        for (int u : adj[v]) {
-            if (u == p || u == Big[v]) continue;
-            add_subtree(u, v, +1);
-        }
-
-        for (auto &pr : queries[v]) {
-            int color = pr.first;
-            int idx = pr.second;
-            ans[idx] = freq[color];
-        }
-
-        if (!keep) add_subtree(v, p, -1);
-    }
-    */
-}
-
 namespace custom_hash {
     // struct custom_hash {
     //     static uint64_t splitmix64(uint64_t x) {
@@ -765,6 +380,48 @@ namespace custom_hash {
     //         static const uint64_t FIXED_RANDOM =
     //             chrono::steady_clock::now().time_since_epoch().count();
     //         return splitmix64(x + FIXED_RANDOM);
+    //     }
+    // };
+}
+namespace dsu_setGroup {
+    // using namespace std;
+    // using namespace __gnu_pbds;
+    // typedef tree<int, null_type,greater<int>,rb_tree_tag,tree_order_statistics_node_update>ordered_set;
+    //
+    //
+    // struct DSU {
+    //     vector<int> parent, size;
+    //     vector<ordered_set> st;
+    //     DSU(int n) {
+    //         parent.resize(n+1);
+    //         size.resize(n+1, 1);
+    //         st.resize(n + 1);
+    //         for(int i = 0; i <= n; i++)
+    //             parent[i] = i, st[i].insert(i);
+    //     }
+    //     int find(int x) {
+    //         if(parent[x] != x)
+    //             parent[x] = find(parent[x]);
+    //         return parent[x];
+    //     }
+    //     bool unite(int a, int b) {
+    //         a = find(a);
+    //         b = find(b);
+    //         if(a == b) return false;
+    //         if(size[a] < size[b]) swap(a, b);
+    //         parent[b] = a;
+    //         size[a] += size[b];
+    //         for (int i: st[b]) st[a].insert(i);
+    //         st[b].clear();
+    //         return true;
+    //     }
+    //     int query(int u, int k) {
+    //         int v = find(u);
+    //         if (k >= st[v].size()) return -1;
+    //         return *st[v].find_by_order(k);
+    //     }
+    //     bool same(int a, int b) {
+    //         return find(a) == find(b);
     //     }
     // };
 }
