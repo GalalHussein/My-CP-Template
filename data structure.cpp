@@ -427,3 +427,76 @@ namespace dsu_setGroup {
     //     }
     // };
 }
+namespace SparseTable2D {
+//     struct SparseTable2D {
+//     int n, m;
+//     vector<int> lg;
+//     vector<vector<vector<vector<int>>>> st;
+//
+//     SparseTable2D() {}
+//     SparseTable2D(const vector<vector<int>>& a) { build(a); }
+//
+//     int merge(int a, int b) { return min<int>(a, b); }
+//
+//     void build(const vector<vector<int>>& a) {
+//         n = (int)a.size();
+//         m = (int)a[0].size();
+//
+//         lg.assign(max(n, m) + 1, 0);
+//         for (int i = 2; i < (int)lg.size(); ++i) lg[i] = lg[i / 2] + 1;
+//
+//         int Kx = lg[n] + 1;
+//         int Ky = lg[m] + 1;
+//
+//         st.assign(Kx, vector<vector<vector<int>>>(Ky,
+//                  vector<vector<int>>(n, vector<int>(m))));
+//
+//         for (int i = 0; i < n; ++i)
+//             for (int j = 0; j < m; ++j)
+//                 st[0][0][i][j] = a[i][j];
+//
+//         // build on columns
+//         for (int ky = 1; ky < Ky; ++ky) {
+//             int len = 1 << ky;
+//             int half = len >> 1;
+//             for (int i = 0; i < n; ++i) {
+//                 for (int j = 0; j + len <= m; ++j) {
+//                     st[0][ky][i][j] = merge(st[0][ky - 1][i][j],
+//                                           st[0][ky - 1][i][j + half]);
+//                 }
+//             }
+//         }
+//
+//         // build on rows
+//         for (int kx = 1; kx < Kx; ++kx) {
+//             int lenx = 1 << kx;
+//             int halfx = lenx >> 1;
+//             for (int ky = 0; ky < Ky; ++ky) {
+//                 int leny = 1 << ky;
+//                 for (int i = 0; i + lenx <= n; ++i) {
+//                     for (int j = 0; j + leny <= m; ++j) {
+//                         st[kx][ky][i][j] = merge(st[kx - 1][ky][i][j],
+//                                                st[kx - 1][ky][i + halfx][j]);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//
+//     // rows [x1..x2], cols [y1..y2] (0-indexed, inclusive)
+//     int query(int x1, int y1, int x2, int y2) {
+//         int kx = lg[x2 - x1 + 1];
+//         int ky = lg[y2 - y1 + 1];
+//
+//         int nx = x2 - (1 << kx) + 1;
+//         int ny = y2 - (1 << ky) + 1;
+//
+//         int a1 = st[kx][ky][x1][y1];
+//         int a2 = st[kx][ky][nx][y1];
+//         int a3 = st[kx][ky][x1][ny];
+//         int a4 = st[kx][ky][nx][ny];
+//
+//         return merge(merge(a1, a2), merge(a3, a4));
+//     }
+// };
+}
