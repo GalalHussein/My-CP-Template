@@ -158,6 +158,22 @@ namespace floyd {
     //         }
     //     }
     // }
+    // add edges in query
+    // auto Add = [&](int u, int v, long long w) {
+    //     if (dist[u][v] > w) dist[u][v] = w;
+    //
+    //     for (int i = 1; i <= n; i++) {
+    //         for (int j = 1; j <= n; j++) {
+    //             if (dist[i][u] == INF || dist[v][j] == INF) continue;
+    //             dist[i][j] = min(dist[i][j],
+    //                              dist[i][u] + w + dist[v][j]);
+    //         }
+    //     }
+    // };
+    // auto addTwoDirection = [&](int u, int v, long long w) {
+    //     Add(u, v, w);
+    //     Add(v, u, w);
+    // };
 }
 namespace kruskal {
     // struct DSU {
